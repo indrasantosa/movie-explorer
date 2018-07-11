@@ -1,0 +1,6 @@
+export const PRIMARY_COLOR = '#951C81'
+export const PRIMARY_COLOR_TWO = '#4F1556'
+export const PRIMARY_COLOR_THREE = '#FBBB21'
+// export const ACCENT_COLOR_ONE = ''
+// export const ACCENT_COLOR_TWO = ''
+// export const ACCENT_COLOR_THRE = ''
