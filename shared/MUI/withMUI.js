@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import Head from 'next/head'
 import {
   PRIMARY_COLOR,
   PRIMARY_COLOR_TWO,
-  PRIMARY_COLOR_THREE,
-  // ACCENT_COLOR_ONE,
-  // ACCENT_COLOR_TWO,
-  // ACCENT_COLOR_THREE
+  PRIMARY_COLOR_THREE
 } from './theme'
 
 const withMaterialUI = ComposedComponent => {
@@ -17,31 +13,31 @@ const withMaterialUI = ComposedComponent => {
     static async getInitialProps(ctx) {
       const { req } = ctx
       const userAgent = req ? req.headers['user-agent'] : navigator.userAgent
-      // const subProps = await ComposedComponent.getInitialProps(ctx)
+      const subProps = await ComposedComponent.getInitialProps(ctx)
 
       return {
-        // ...subProps,
+        ...subProps,
         userAgent
       }
     }
 
     render () {
       const { userAgent } = this.props
-      const Lato = 'lato, sans-serif'
-      const muiTheme = getMuiTheme({
-        fontFamily: Lato,
-        palette: {
-          primary1Color: PRIMARY_COLOR,
-          primary2Color: PRIMARY_COLOR_TWO,
-          primary3Color: PRIMARY_COLOR_THREE
-        },
-        appBar: {
-          height: 60
-        }
-      },
-      {
-        userAgent
-      })
+      // const Lato = 'lato, sans-serif'
+      // const muiTheme = createMuiTheme({
+      //   // typography: {
+      //   //   fontFamily: Lato
+      //   // },
+      //   palette: {
+      //     primary: {
+      //       main: PRIMARY_COLOR
+      //     },
+      //     secondary: {
+      //       main: PRIMARY_COLOR_TWO
+      //     }
+      //   }
+      // })
+      const muiTheme = createMuiTheme()
 
       return (
         <div>
@@ -49,8 +45,11 @@ const withMaterialUI = ComposedComponent => {
             <title>HOOQS</title>
             <meta name='viewport' content='initial-scale=1.0, width=device-width' />
             <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' />
+            <style>
+              
+            </style>
           </Head>
-          <MuiThemeProvider muiTheme={muiTheme}>
+          <MuiThemeProvider theme={muiTheme}>
             <ComposedComponent {...this.props} />
           </MuiThemeProvider>
         </div>

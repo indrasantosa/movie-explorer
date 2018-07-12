@@ -1,9 +1,24 @@
-import AppBar from 'material-ui/AppBar'
+import { PRIMARY_COLOR } from '../shared/MUI/theme'
 
 const Header = ({ title = 'HOOQS' }) => {
+  const styles = {
+    ...Styles.component,
+    backgroundColor: PRIMARY_COLOR
+  }
+
   return (
-    <AppBar title={title} showMenuIconButton={false} />
+    <div style={styles}>
+      {title}
+    </div>
   )
+}
+
+const Styles = {
+  component: {
+    backgroundColor: PRIMARY_COLOR,
+    color: '#fff',
+    padding: 10
+  }
 }
 
 export default Header
