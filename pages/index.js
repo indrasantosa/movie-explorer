@@ -96,7 +96,8 @@ export default withLayout(Index)
 
 const Styles = {
   container: {
-    maxWidth: 800,
+    maxWidth: 815,
+    padding: 15,
     margin: 'auto'
   },
   card: {

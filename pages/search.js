@@ -102,7 +102,7 @@ class Search extends React.Component {
   }
 
   _renderContentContainer = () => {
-    if (this.state.isLoading) {
+    if (this.state.isSearching) {
 
     } else if (this.state.displayedSeries.length > 0) {
       return this.state.displayedSeries.filter(o => o.poster_path).map(item => {
@@ -141,7 +141,8 @@ export default withLayout(Search)
 
 const Styles = {
   container: {
-    maxWidth: 800,
+    maxWidth: 815,
+    padding: 15,
     margin: 'auto'
   },
   card: {
