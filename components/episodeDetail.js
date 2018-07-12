@@ -7,21 +7,28 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button'
 
-const SeasonInfo = ({ season, onSeeDetail }) => {
+const episodeDetail = ({ episode, onSeeDetail }) => {
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography>{season.name}</Typography>
+        <Typography>Episode {episode.episode_number} : {episode.name}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <img style={{ height: 120 }} src={`https://image.tmdb.org/t/p/w500${season.poster_path}`} alt=""/>
+        <img style={{ height: 120 }} src={`https://image.tmdb.org/t/p/w500${episode.still_path}`} alt=""/>
         <Typography style={{ margin: '0px 0px 0px 15px' }}>
-          <span style={{ fontWeight: 'bold' }}>Summary</span> <br />
-          {season.overview || 'No description available'}
-          <p>{season.episode_count} episode(s)</p>
-          <Button variant="contained" color="primary" onClick={onSeeDetail}>
-            See Detail
-          </Button>
+          <div>
+            <span style={{ fontWeight: 'bold' }}>Summary</span> <br />
+            <p>{episode.overview || 'No description available'}</p>
+          </div>
+          <div>
+            <span style={{ fontWeight: 'bold' }}>Staring</span> <br />
+            <p>
+
+            </p>
+            {episode.guest_stars.map(star => {
+              return `${star.name} as ${star.character}`
+            }).join(', ')}
+          </div>
         </Typography>
 
       </ExpansionPanelDetails>
@@ -39,4 +46,4 @@ const Styles = {
   }
 }
 
-export default SeasonInfo
+export default episodeDetail

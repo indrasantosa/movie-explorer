@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Link from 'next/link'
+import Router from 'next/router'
 
 import SearchBar from '../components/searchBar'
 
@@ -23,20 +24,38 @@ const styles = {
   },
 }
 
-const Header = ({ title = 'HOOQS' }) => {
+function onChange (e) {
+  const value = e.target.value
+  if (value) {
+    Router.push({
+      pathname: '/search',
+      query: {
+        search: value
+      }
+    })
+  } else {
+    Router.push({
+      pathname: '/'
+    })
+  }
+}
+
+const Header = (props) => {
+  const search = props.url.query.search
+
   return (
-    <div className={styles.root}>
+    <div className={styles.root} key={'headerBar'}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton className={styles.menuButton} color="inherit" aria-label="Menu">
+          <IconButton style={styles.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
           <Typography variant="title" color="inherit" style={styles.flex}>
-            <Link style={{ color: '#fff' }} href={'/'}>
-              HOOQS
+            <Link href={'/'}>
+              <span style={{ color: '#fff' }}>HOOQS</span>
             </Link>
           </Typography>
-          <SearchBar />
+          <SearchBar value={search} onChange={onChange} ref={this.searchBar} />
         </Toolbar>
       </AppBar>
     </div>

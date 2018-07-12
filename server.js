@@ -18,6 +18,21 @@ app.prepare()
       return app.render(req, res, '/tvs', { id: req.params.id })
     })
 
+    server.get('/tv/:tvId/season/:seasonId', (req, res) => {
+      return app.render(req, res, '/seasons', { 
+        tvId: req.params.tvId,
+        seasonId: req.params.seasonsId
+      })
+    })
+
+    server.get('/tv/:tvId/season/:seasonId/episode/:episodeId', (req, res) => {
+      return app.render(req, res, '/episodes', { 
+        tvId: req.params.tvId,
+        seasonId: req.params.seasonsId,
+        episodeId: req.params.episodeId
+      })
+    })
+
     server.get('*', (req, res) => {
       return handle(req, res)
     })

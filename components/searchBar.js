@@ -9,12 +9,15 @@ const Styles = {
   }
 }
 
-const SearchBar = ({ value, onChange }) => {
+const SearchBar = ({ value, onChange, ref }) => {
   return (
     <div style={Styles.input}>
       <Input
+        inputRef={(ref) => { ref = ref }}
         style={{ width: 200 }}
         placeholder={'Search'}
+        onChange={onChange}
+        defaultValue={value}
         inputProps={{
           'aria-label': 'Description',
         }}

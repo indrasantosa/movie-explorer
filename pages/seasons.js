@@ -1,12 +1,12 @@
 import React from 'react'
 import 'isomorphic-fetch'
 import getConfig from 'next/config'
-import Router from 'next/router'
 
 import withLayout from '../shared/MUI/withLayout'
 
 import Poster from '../components/poster'
 import SeasonInfo from '../components/seasonInfo'
+import EpisodeDetail from '../components/episodeDetail'
 
 const { publicRuntimeConfig } = getConfig()
 const { apiUrl, apiKey } = publicRuntimeConfig
@@ -17,7 +17,6 @@ const Styles = {
     height: 500,
   },
   header: {
-    color: '#fff',
     position: 'absolute',
     bottom: 0,
     width: '100%'
@@ -50,29 +49,14 @@ const Styles = {
 
 class MovieDetail extends React.Component {
   static async getInitialProps({ req, query, pathname }) {
-    const tvId = query.id
+    const { tvId, seasonId } = query
 
-    const response = await fetch(`${apiUrl}/tv/${tvId}?api_key=${apiKey}`)
+    const response = await fetch(`${apiUrl}/tv/${tvId}/season/${seasonId}?api_key=${apiKey}`)
     const data = await response.json()
 
-    const trailerResponse = await fetch(`${apiUrl}/tv/${tvId}/videos?api_key=${apiKey}`)
-    const trailerData = await trailerResponse.json()
-
     return {
-      tv: data,
-      trailers: trailerData.results
+      season: data
     }
-  }
-
-  _goToSeasonDetail = (seasonId) => {
-    const tvId = this.props.tv.id
-    Router.push({
-      pathname: '/seasons',
-      query: {
-        tvId: tvId,
-        seasonId: seasonId
-      }
-    }, `/tv/${tvId}/season/${seasonId}`)
   }
 
   render () {
@@ -80,46 +64,35 @@ class MovieDetail extends React.Component {
       <div>
         <div>
           <div style={Styles.headerContainer}>
-            <div style={{ ...Styles.backdrop, backgroundImage: `url(https://image.tmdb.org/t/p/w500${this.props.tv.backdrop_path})` }} />
+            {/* <div style={{ ...Styles.backdrop, backgroundImage: `url(https://image.tmdb.org/t/p/w500${this.props.tv.backdrop_path})` }} /> */}
             <div style={Styles.header}>
               <div style={Styles.container}>
-                <h1>{this.props.tv.original_name}</h1>
-                <img style={Styles.poster} src={`https://image.tmdb.org/t/p/w500${this.props.tv.poster_path}`} alt=""/>
+                <h1>{this.props.season.name}</h1>
+                <img style={Styles.poster} src={`https://image.tmdb.org/t/p/w500${this.props.season.poster_path}`} alt=""/>
                 <div style={Styles.movieDetailContainer}>
-                  <p>{this.props.tv.overview}</p>
-                  <a href={this.props.tv.homepage}></a>
-                  <div>
+                  <p>{this.props.season.overview}</p>
+                  <span>Released: {this.props.season.air_date}</span>
+                  {/* <div>
                     <span>Genre: </span>
                     {this.props.tv.genres.map(genre => genre.name).join(', ')}
                   </div>
                   <div>
                     {this.props.tv.production_companies.map(company => company.name).join(', ')}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
           </div>
-
           <div style={Styles.container}>
-            <h3>Trailers</h3>
-            <div>
-              {this.props.trailers.map(trailer => {
-                if (trailer.site === 'YouTube') {
-                  return (
-                    <iframe width="250" height="148" src={`https://www.youtube.com/embed/${trailer.key}`} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-                  )
-                } else {
-                  return null
-                }
-              })}
-            </div>
-          </div>
-          
-          <div style={Styles.container}>
-            <h3>Seasons</h3>
-            {this.props.tv.seasons.map(season => {
+            <h2>Episodes</h2>
+            {this.props.season.episodes.map(episode => {
               return (
-                <SeasonInfo season={season} onSeeDetail={() => this._goToSeasonDetail(season.season_number)} />
+                <EpisodeDetail episode={episode} />
+                // <div>
+                //   <img src={`https://image.tmdb.org/t/p/w500${episode.still_path}`} alt=""/>
+                //   <h3>Episode {episode.episode_number} : {episode.name}</h3>
+                //   <p>{episode.overview}</p>
+                // </div>
               )
             })}
           </div>
