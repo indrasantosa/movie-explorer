@@ -2,6 +2,8 @@ import React from 'react'
 import 'isomorphic-fetch'
 import getConfig from 'next/config'
 
+import withLayout from '../shared/MUI/withLayout'
+
 import Header from '../components/header'
 import Poster from '../components/poster'
 
@@ -28,7 +30,6 @@ class MovieDetail extends React.Component {
   render () {
     return (
       <div>
-        <Header />
         <div>
           <h1>{this.props.tv.original_name}</h1>
           <p>{this.props.tv.overview}</p>
@@ -71,4 +72,4 @@ class MovieDetail extends React.Component {
   }
 }
 
-export default MovieDetail
+export default withLayout(MovieDetail)

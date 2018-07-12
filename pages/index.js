@@ -2,6 +2,9 @@ import React from 'react'
 import 'isomorphic-fetch'
 import getConfig from 'next/config'
 
+import Button from '@material-ui/core/Button'
+
+import withLayout from '../shared/MUI/withLayout'
 import Header from '../components/header'
 import Poster from '../components/poster'
 
@@ -20,7 +23,10 @@ class Index extends React.Component {
   render () {
     return (
       <div>
-        <Header />
+        {/* <Header /> */}
+        <Button variant="raised">
+          MUI button
+        </Button>
         {this.props.movies.map(item => {
           return (
             <Poster key={item.id} href={{ pathname: `/tvs`, query: { id: item.id } }} as={`/tv/${item.id}`} image={`url(https://image.tmdb.org/t/p/w500${item.poster_path}`} />
@@ -31,4 +37,4 @@ class Index extends React.Component {
   }
 }
 
-export default Index
+export default withLayout(Index)
