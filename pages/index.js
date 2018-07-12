@@ -23,13 +23,9 @@ class Index extends React.Component {
   render () {
     return (
       <div>
-        {/* <Header /> */}
-        <Button variant="raised">
-          MUI button
-        </Button>
         {this.props.movies.map(item => {
           return (
-            <Poster key={item.id} href={{ pathname: `/tvs`, query: { id: item.id } }} as={`/tv/${item.id}`} image={`url(https://image.tmdb.org/t/p/w500${item.poster_path}`} />
+            <Poster key={item.id} href={{ pathname: `/tvs`, query: { id: item.id } }} as={`/tv/${item.id}`} image={`https://image.tmdb.org/t/p/w500${item.poster_path}`} />
           )
         })}
       </div>

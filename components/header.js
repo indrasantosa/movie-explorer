@@ -4,6 +4,10 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Link from 'next/link'
+
+import SearchBar from '../components/searchBar'
+
 import { PRIMARY_COLOR } from '../shared/MUI/theme'
 
 const styles = {
@@ -20,11 +24,6 @@ const styles = {
 }
 
 const Header = ({ title = 'HOOQS' }) => {
-  const styles = {
-    ...Styles.component,
-    backgroundColor: PRIMARY_COLOR
-  }
-
   return (
     <div className={styles.root}>
       <AppBar position="static">
@@ -32,10 +31,12 @@ const Header = ({ title = 'HOOQS' }) => {
           <IconButton className={styles.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="title" color="inherit" className={styles.flex}>
-            HOOQS
+          <Typography variant="title" color="inherit" style={styles.flex}>
+            <Link style={{ color: '#fff' }} href={'/'}>
+              HOOQS
+            </Link>
           </Typography>
-          <Button color="inherit">Login</Button>
+          <SearchBar />
         </Toolbar>
       </AppBar>
     </div>
